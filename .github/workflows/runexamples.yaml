@@ -7,15 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [ '1.16', '1.17', '1.18', '1.19', '1.20' ]
+        go: [ '1.19', '1.20' ]
+
     name: Go ${{ matrix.go }} sample
     steps:
       - uses: actions/checkout@v3
+
       - name: Setup go
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go }}
+
       - run: go run examples/female/main.go
+
       - run: go run examples/general/main.go
+
       - run: go run examples/male/main.go
+
       - run: go run examples/multiple/main.go
