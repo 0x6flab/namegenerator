@@ -23,7 +23,6 @@ func TestNameGenerator_Generate(t *testing.T) {
 	}
 
 	if strings.Count(name, "-") == 1 {
-
 		if !strings.Contains(name, "-") {
 			t.Errorf("Expected a name with a family name separator, got %s", name)
 		}
@@ -40,7 +39,6 @@ func TestNameGenerator_Generate(t *testing.T) {
 	name = generator.Generate()
 
 	if strings.Count(name, "-") == 1 {
-
 		if len(name) == 0 {
 			t.Errorf("Expected a male name, got an empty string")
 		}
@@ -62,7 +60,6 @@ func TestNameGenerator_Generate(t *testing.T) {
 	name = generator.Generate()
 
 	if strings.Count(name, "-") == 1 {
-
 		if len(name) == 0 {
 			t.Errorf("Expected a female name, got an empty string")
 		}
@@ -95,7 +92,6 @@ func TestNameGenerator_GenerateNames(t *testing.T) {
 		}
 
 		if strings.Count(name, "-") == 1 {
-
 			if !strings.Contains(name, "-") {
 				t.Errorf("Expected a name with a family name separator, got %s", name)
 			}
