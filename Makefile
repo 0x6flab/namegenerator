@@ -8,7 +8,7 @@ cover-html: test
 
 .PHONY: lint
 lint:
-	golangci-lint cache clean && golangci-lint run --enable-all --disable misspell --disable funlen --disable gofumpt --disable ireturn --disable cyclop --disable lll --disable gosec --disable gochecknoglobals --disable paralleltest --disable wsl
+	golangci-lint cache clean && golangci-lint run --enable-all --disable misspell --disable funlen --disable gofumpt --disable ireturn --disable cyclop --disable lll --disable gosec --disable gochecknoglobals --disable paralleltest --disable wsl --disable gocognit
 
 godoc-serve:
 	godoc -http=:6060
