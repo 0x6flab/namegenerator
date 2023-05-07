@@ -65,7 +65,7 @@ with open("names.go", "w") as f:
   f.write("\n// MaleNames is a list of male names\n")
   for line in wrapped_male_text:
         f.write(line + "\n")
-  f.write("\n// GeneralNames is a list of general names\n")                
+  f.write("\n// GeneralNames is a list of general names\n")
   for line in wrapped_general_text:
-        f.write(line + "\n")  
+        f.write(line + "\n")
   f.write(")")
