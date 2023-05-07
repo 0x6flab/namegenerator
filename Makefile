@@ -1,0 +1,14 @@
+.PHONY: test
+test:
+	go test -mod=vendor -v --race -covermode=atomic -coverprofile cover.txt ./... && 
+
+.PHONY: cover-html
+cover-html: test
+	go tool cover -html cover.txt -o cover.html
+
+.PHONY: lint
+lint:
+	golangci-lint cache clean && golangci-lint run --enable-all --disable misspell --disable funlen --disable gofumpt --disable ireturn --disable cyclop --disable lll --disable gosec --disable gochecknoglobals --disable paralleltest --disable wsl
+
+godoc-serve:
+	godoc -http=:6060
