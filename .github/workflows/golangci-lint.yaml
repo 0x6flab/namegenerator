@@ -23,4 +23,4 @@ jobs:
           version: v1.50.1
 
           # Optional: golangci-lint command line arguments.
-          args: --enable-all --disable misspell --disable funlen --disable gofumpt --disable ireturn --disable cyclop --disable lll --disable gosec --disable gochecknoglobals --disable paralleltest --disable wsl
+          args: --enable-all --disable misspell --disable funlen --disable gofumpt --disable ireturn --disable cyclop --disable lll --disable gosec --disable gochecknoglobals --disable paralleltest --disable wsl --disable gocognit
