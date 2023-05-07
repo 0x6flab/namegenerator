@@ -8,6 +8,8 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/0x6flab/namegenerator?style=plastic)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d2a9668083e57e08c20b/maintainability)](https://codeclimate.com/github/0x6flab/namegenerator/maintainability)
 [![Test and coverage](https://github.com/0x6flab/namegenerator/actions/workflows/codecov.yaml/badge.svg)](https://github.com/0x6flab/namegenerator/actions/workflows/codecov.yaml)
+[![Test and coverage](https://github.com/0x6flab/namegenerator/actions/workflows/runexamples.yaml/badge.svg)](https://github.com/0x6flab/namegenerator/actions/workflows/runexamples.yaml)
+[![golangci-lint](https://github.com/0x6flab/namegenerator/actions/workflows/golangci-lint.yaml/badge.svg)](https://github.com/0x6flab/namegenerator/actions/workflows/golangci-lint.yaml)
 
 NameGenerator is a Golang package that provides a simple yet powerful tool for generating human-readable and pronounceable random names.
 
