@@ -56,11 +56,14 @@ type nameGenerator struct {
 //
 //	generator := namegenerator.NewNameGenerator().WithGender("female")
 func NewNameGenerator() NameGenerator {
-	return &nameGenerator{}
+	return &nameGenerator{
+		gender: "",
+	}
 }
 
 func (namegen *nameGenerator) WithGender(gender string) NameGenerator {
 	namegen.gender = gender
+
 	return namegen
 }
 
