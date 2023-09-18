@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	generator := namegenerator.NewNameGenerator("male")
+	generator := namegenerator.NewNameGenerator().WithGender("male")
 	name := generator.Generate()
 	fmt.Println(name)
 }

@@ -8,14 +8,14 @@ import (
 )
 
 func TestNewNameGenerator(t *testing.T) {
-	generator := namegenerator.NewNameGenerator("")
+	generator := namegenerator.NewNameGenerator()
 	if generator == nil {
 		t.Errorf("Expected NameGenerator, got nil")
 	}
 }
 
 func TestNameGenerator_Generate(t *testing.T) {
-	generator := namegenerator.NewNameGenerator("")
+	generator := namegenerator.NewNameGenerator()
 	name := generator.Generate()
 
 	if len(name) == 0 {
@@ -35,7 +35,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			t.Errorf("Generated name '%s' does not contain a family name", name)
 		}
 	}
-	generator = namegenerator.NewNameGenerator("male")
+	generator = namegenerator.NewNameGenerator().WithGender("male")
 	name = generator.Generate()
 
 	if strings.Count(name, "-") == 1 {
@@ -56,7 +56,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		}
 	}
 
-	generator = namegenerator.NewNameGenerator("female")
+	generator = namegenerator.NewNameGenerator().WithGender("female")
 	name = generator.Generate()
 
 	if strings.Count(name, "-") == 1 {
@@ -79,7 +79,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 }
 
 func TestNameGenerator_GenerateNames(t *testing.T) {
-	generator := namegenerator.NewNameGenerator("")
+	generator := namegenerator.NewNameGenerator()
 	names := generator.GenerateNames(5)
 
 	if len(names) != 5 {
@@ -106,7 +106,7 @@ func TestNameGenerator_GenerateNames(t *testing.T) {
 		}
 	}
 
-	generator = namegenerator.NewNameGenerator("male")
+	generator = namegenerator.NewNameGenerator().WithGender("male")
 	names = generator.GenerateNames(5)
 
 	if len(names) != 5 {
@@ -133,7 +133,7 @@ func TestNameGenerator_GenerateNames(t *testing.T) {
 		}
 	}
 
-	generator = namegenerator.NewNameGenerator("female")
+	generator = namegenerator.NewNameGenerator().WithGender("female")
 	names = generator.GenerateNames(5)
 
 	if len(names) != 5 {
@@ -169,4 +169,25 @@ func contains(slice []string, element string) bool {
 	}
 
 	return false
+}
+
+func BenchmarkNameGenerator_Generate(b *testing.B) {
+	generator := namegenerator.NewNameGenerator()
+	for i := 0; i < b.N; i++ {
+		generator.Generate()
+	}
+}
+
+func BenchmarkNameGenerator_Generate10Names(b *testing.B) {
+	generator := namegenerator.NewNameGenerator()
+	for i := 0; i < b.N; i++ {
+		generator.GenerateNames(10)
+	}
+}
+
+func BenchmarkNameGenerator_Generate1KNames(b *testing.B) {
+	generator := namegenerator.NewNameGenerator()
+	for i := 0; i < b.N; i++ {
+		generator.GenerateNames(1000)
+	}
 }

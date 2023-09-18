@@ -14,7 +14,8 @@ type NameGenerator interface {
 	// Example:
 	//  name := generator.Generate()
 	//  fmt.Println(name)
-	// // Output: John-Smith
+	// Output:
+	//  `John-Smith`
 	Generate() string
 
 	// GenerateNames generates a list of names.
@@ -22,8 +23,18 @@ type NameGenerator interface {
 	// Example:
 	//  names := generator.GenerateNames(10)
 	//  fmt.Println(names)
-	// // Output: [Dryke-Monroe Scarface-Lesway Shelden-Corsale Marcus-Ivett Victor-Nesrallah Merril-Gulick Leonardo-Lindler Maurits-Lias Rawley-Connor Elvis-Khouderchah]
+	// Output:
+	//  `[Dryke-Monroe Scarface-Lesway Shelden-Corsale Marcus-Ivett Victor-Nesrallah Merril-Gulick Leonardo-Lindler Maurits-Lias Rawley-Connor Elvis-Khouderchah]`
 	GenerateNames(int) []string
+
+	// WithGender generates a name based on the gender.
+	//
+	// Example:
+	//  name := generator.Generate().WithGender("male")
+	//  fmt.Println(name)
+	// Output:
+	//  `John-Smith`
+	WithGender(string) NameGenerator
 }
 
 // nameGenerator is a struct that implements NameGenerator.
@@ -35,19 +46,22 @@ type nameGenerator struct {
 //
 // Example to generate general names:
 //
-//	generator := namegenerator.NewNameGenerator("")
+//	generator := namegenerator.NewNameGenerator()
 //
 // Example to generate male names:
 //
-//	generator := namegenerator.NewNameGenerator("male")
+//	generator := namegenerator.NewNameGenerator().WithGender("male")
 //
 // Example to generate female names:
 //
-//	generator := namegenerator.NewNameGenerator("female")
-func NewNameGenerator(gender string) NameGenerator {
-	return &nameGenerator{
-		gender: gender,
-	}
+//	generator := namegenerator.NewNameGenerator().WithGender("female")
+func NewNameGenerator() NameGenerator {
+	return &nameGenerator{}
+}
+
+func (namegen *nameGenerator) WithGender(gender string) NameGenerator {
+	namegen.gender = gender
+	return namegen
 }
 
 func (namegen *nameGenerator) Generate() string {
