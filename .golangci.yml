@@ -1,0 +1,25 @@
+linters:
+  enable-all: true
+  fast: true
+  disable:
+    - misspell
+    - lll
+    - wsl
+    - depguard
+    - scopelint
+    - nosnakecase
+    - ifshort
+    - gocognit
+
+linters-settings:
+  goheader:
+    values:
+      const:
+        COMPANY: 0x6flab
+    template: |-
+      Copyright (c) {{ COMPANY }}. All rights reserved.
+
+      SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
+  funlen:
+    lines: -1
+    statements: -1
