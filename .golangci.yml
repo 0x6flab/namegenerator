@@ -10,6 +10,7 @@ linters:
     - nosnakecase
     - ifshort
     - gocognit
+    - gochecknoinits
 
 linters-settings:
   goheader:
