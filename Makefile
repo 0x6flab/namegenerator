@@ -4,10 +4,10 @@ lint:
 
 .PHONY: examples
 examples:
-	go run examples/female/main.go >> /dev/null && \
-	go run examples/male/main.go >> /dev/null && \
-	go run examples/multiple/main.go >> /dev/null && \
-	go run examples/nonbinary/main.go >> /dev/null
+	go run examples/female/main.go && \
+	go run examples/male/main.go && \
+	go run examples/multiple/main.go && \
+	go run examples/nonbinary/main.go
 
 .PHONY: test
 test:
