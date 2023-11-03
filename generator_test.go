@@ -1,3 +1,6 @@
+// Copyright (c) 0x6flab. All rights reserved.
+//
+// SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
 package namegenerator_test
 
 import (
@@ -31,11 +34,11 @@ func TestNameGenerator_Generate(t *testing.T) {
 			t.Errorf("Generated name '%s' does not contain a general name", name)
 		}
 
-		if !contains(namegenerator.FamilyNames, strings.Split(name, "-")[1]) {
-			t.Errorf("Generated name '%s' does not contain a family name", name)
+		if !contains(namegenerator.GeneralNames, strings.Split(name, "-")[1]) {
+			t.Errorf("Generated name '%s' does not contain a general name", name)
 		}
 	}
-	generator = namegenerator.NewNameGenerator().WithGender("male")
+	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Male)
 	name = generator.Generate()
 
 	if strings.Count(name, "-") == 1 {
@@ -56,7 +59,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		}
 	}
 
-	generator = namegenerator.NewNameGenerator().WithGender("female")
+	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Female)
 	name = generator.Generate()
 
 	if strings.Count(name, "-") == 1 {
@@ -100,13 +103,13 @@ func TestNameGenerator_GenerateNames(t *testing.T) {
 				t.Errorf("Generated name '%s' does not contain a general name", name)
 			}
 
-			if !contains(namegenerator.FamilyNames, strings.Split(name, "-")[1]) {
-				t.Errorf("Generated name '%s' does not contain a family name", name)
+			if !contains(namegenerator.GeneralNames, strings.Split(name, "-")[1]) {
+				t.Errorf("Generated name '%s' does not contain a general name", name)
 			}
 		}
 	}
 
-	generator = namegenerator.NewNameGenerator().WithGender("male")
+	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Male)
 	names = generator.GenerateNames(5)
 
 	if len(names) != 5 {
@@ -133,7 +136,7 @@ func TestNameGenerator_GenerateNames(t *testing.T) {
 		}
 	}
 
-	generator = namegenerator.NewNameGenerator().WithGender("female")
+	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Female)
 	names = generator.GenerateNames(5)
 
 	if len(names) != 5 {
