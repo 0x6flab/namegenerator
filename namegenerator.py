@@ -144,9 +144,9 @@ class NameGenerator:
                 f.write(line + "\n")
             f.write(")")
 
-    def remove_files(self, file_path):
+    def remove_file(self, file_path):
         """
-        `remove_files` removes the temporary files
+        `remove_file` removes the temporary files
 
         Args:
             `file_path` (str): The path of the file to be removed
@@ -171,10 +171,10 @@ class NameGenerator:
         self.read_files()
         self.print_summary()
         self.write_go_file()
-        self.remove_files(self.TEMP_FAM_FILE)
-        self.remove_files(self.TEMP_FEMALE_FILE)
-        self.remove_files(self.TEMP_MALE_FILE)
-        self.remove_files(self.TEMP_NAMES_FILE)
+        temp_files = [self.TEMP_FAM_FILE, self.TEMP_FEMALE_FILE,
+                      self.TEMP_MALE_FILE, self.TEMP_NAMES_FILE]
+        for temp_file in temp_files:
+            self.remove_file(temp_file)
 
 
 def main():
