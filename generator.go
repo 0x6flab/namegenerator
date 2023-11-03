@@ -39,7 +39,7 @@ type NameGenerator interface {
 	//  fmt.Println(names)
 	// Output:
 	//  `[Dryke-Monroe Scarface-Lesway Shelden-Corsale Marcus-Ivett Victor-Nesrallah Merril-Gulick Leonardo-Lindler Maurits-Lias Rawley-Connor Elvis-Khouderchah]`
-	GenerateNames(int) []string
+	GenerateNames(count int) []string
 
 	// WithGender generates a name based on the gender.
 	//
@@ -49,7 +49,7 @@ type NameGenerator interface {
 	//  fmt.Println(name)
 	// Output:
 	//  `John-Smith`
-	WithGender(Gender) NameGenerator
+	WithGender(gender Gender) NameGenerator
 }
 
 // nameGenerator is a struct that implements NameGenerator.
