@@ -1,14 +1,21 @@
+.PHONY: lint
+lint:
+	golangci-lint cache clean && golangci-lint run
+
+.PHONY: examples
+examples:
+	go run examples/female/main.go >> /dev/null && \
+	go run examples/male/main.go >> /dev/null && \
+	go run examples/multiple/main.go >> /dev/null && \
+	go run examples/nonbinary/main.go >> /dev/null
+
 .PHONY: test
 test:
-	go test -mod=vendor -v --race -covermode=atomic -coverprofile cover.txt ./...
+	go test --race -covermode=atomic -coverprofile cover.out ./...
 
 .PHONY: cover-html
 cover-html: test
-	go tool cover -html cover.txt -o cover.html
-
-.PHONY: lint
-lint:
-	golangci-lint cache clean && golangci-lint run --enable-all --disable misspell --disable funlen --disable gofumpt --disable ireturn --disable cyclop --disable lll --disable gosec --disable gochecknoglobals --disable paralleltest --disable wsl --disable gocognit --disable depguard
+	go tool cover -html cover.out -o cover.html
 
 godoc-serve:
 	godoc -http=:6060
@@ -24,3 +31,8 @@ precommit:
 .PHONY: update-precommit
 update-precommit:
 	pre-commit autoupdate
+
+release:
+	standard-version
+	goreleaser release --clean --release-notes CHANGELOG.md
+	git push --follow-tags origin main
