@@ -9,7 +9,12 @@ import (
 	"math/big"
 	mrand "math/rand"
 	"sync"
+	"time"
 )
+
+func init() {
+	mrand.New(mrand.NewSource(time.Now().UnixNano()))
+}
 
 type Gender uint8
 
@@ -105,7 +110,7 @@ func (namegen *nameGenerator) Generate() string {
 		return GeneralNames[g1random] + "-" + GeneralNames[g2random]
 	// This condition never happens, but it's here to make the compiler happy.
 	default:
-		return ""
+		panic("invalid gender")
 	}
 }
 
