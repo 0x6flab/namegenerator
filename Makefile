@@ -1,3 +1,8 @@
+.PHONY: generate
+generate:
+	python namegenerator.py
+	gofmt -w names.go
+
 .PHONY: lint
 lint:
 	golangci-lint cache clean && golangci-lint run
