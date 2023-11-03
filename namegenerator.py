@@ -1,5 +1,6 @@
 import textwrap
 import os
+import subprocess
 
 
 class NameGenerator:
@@ -29,8 +30,13 @@ class NameGenerator:
         Returns:
             None
         """
-        files = f"{self.FAM_FILE} {self.FEMALE_FILE} {self.MALE_FILE} {self.NAMES_FILE}"
-        os.system(f'wget --no-verbose {files}')
+        try:
+            subprocess.run(
+                ["wget", "--no-verbose",
+                 self.FAM_FILE, self.FEMALE_FILE, self.MALE_FILE, self.NAMES_FILE]
+            )
+        except Exception as e:
+            print("Error downloading files with error: ", e)
 
     def read_files(self):
         """
@@ -75,6 +81,25 @@ class NameGenerator:
         Number of family names is {len(self.family_names)}\n
         Number of general names is {len(self.all_names)}\n""")
 
+    def generate_go_var(self, names, var_name):
+        """
+        `generate_go_var` generates the go variable
+
+        Args:
+            `names` (list): The list of names
+
+            `var_name` (str): The name of the variable
+
+        Returns:
+            `list`: The list of lines of the go variable
+        """
+
+        var = f"{var_name} = []string{{\"" + \
+            "\", \"".join(names) + "\"}"
+        return textwrap.wrap(
+            var, width=100, break_on_hyphens=False, break_long_words=False
+        )
+
     def write_go_file(self):
         """
         `write_go_file` writes the go file
@@ -85,28 +110,17 @@ class NameGenerator:
         Returns:
             None
         """
-        family_var = "FamilyNames = []string{\"" + \
-            "\", \"".join(self.female_names) + "\"}"
-        wrapped_family_text = textwrap.wrap(
-            family_var, width=100, break_on_hyphens=False, break_long_words=False
+        wrapped_family_text = self.generate_go_var(
+            self.family_names, "FamilyNames"
         )
-
-        female_var = "FemaleNames = []string{\"" + \
-            "\", \"".join(self.female_names) + "\"}"
-        wrapped_female_text = textwrap.wrap(
-            female_var, width=100, break_on_hyphens=False, break_long_words=False
+        wrapped_female_text = self.generate_go_var(
+            self.female_names, "FemaleNames"
         )
-
-        male_var = "MaleNames = []string{\"" + \
-            "\", \"".join(self.male_names) + "\"}"
-        wrapped_male_text = textwrap.wrap(
-            male_var, width=100, break_on_hyphens=False, break_long_words=False
+        wrapped_male_text = self.generate_go_var(
+            self.male_names, "MaleNames"
         )
-
-        general_var = "GeneralNames = []string{\"" + \
-            "\", \"".join(self.all_names) + "\"}"
-        wrapped_general_text = textwrap.wrap(
-            general_var, width=100, break_on_hyphens=False, break_long_words=False
+        wrapped_general_text = self.generate_go_var(
+            self.all_names, "GeneralNames"
         )
 
         with open(self.GO_FILE, "w") as f:
@@ -130,20 +144,17 @@ class NameGenerator:
                 f.write(line + "\n")
             f.write(")")
 
-    def remove_files(self):
+    def remove_files(self, file_path):
         """
         `remove_files` removes the temporary files
 
         Args:
-            None
+            `file_path` (str): The path of the file to be removed
 
         Returns:
             None
         """
-        os.remove(self.TEMP_FAM_FILE)
-        os.remove(self.TEMP_FEMALE_FILE)
-        os.remove(self.TEMP_MALE_FILE)
-        os.remove(self.TEMP_NAMES_FILE)
+        os.remove(file_path)
 
     def run(self):
         """
@@ -160,7 +171,10 @@ class NameGenerator:
         self.read_files()
         self.print_summary()
         self.write_go_file()
-        self.remove_files()
+        self.remove_files(self.TEMP_FAM_FILE)
+        self.remove_files(self.TEMP_FEMALE_FILE)
+        self.remove_files(self.TEMP_MALE_FILE)
+        self.remove_files(self.TEMP_NAMES_FILE)
 
 
 def main():
