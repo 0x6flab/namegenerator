@@ -9,13 +9,7 @@ lint:
 
 .PHONY: examples
 examples:
-	go run examples/female/main.go && \
-	go run examples/male/main.go && \
-	go run examples/multiple/main.go && \
-	go run examples/nonbinary/main.go && \
-	go run examples/prefix/main.go && \
-	go run examples/suffix/main.go && \
-	go run examples/chain/main.go
+	go run examples/main.go
 
 .PHONY: test
 test:

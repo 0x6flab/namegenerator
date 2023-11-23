@@ -27,5 +27,4 @@ linters-settings:
 
   gomnd:
     ignored-files:
-      - "examples/multiple/main.go"
-      - "examples/chain/main.go"
+      - "examples/main.go"
