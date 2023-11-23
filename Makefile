@@ -12,11 +12,18 @@ examples:
 	go run examples/female/main.go && \
 	go run examples/male/main.go && \
 	go run examples/multiple/main.go && \
-	go run examples/nonbinary/main.go
+	go run examples/nonbinary/main.go && \
+	go run examples/prefix/main.go && \
+	go run examples/suffix/main.go && \
+	go run examples/chain/main.go
 
 .PHONY: test
 test:
 	go test --race -covermode=atomic -coverprofile cover.out ./...
+
+.PHONY: bench
+bench:
+	go test -bench='.' -cpuprofile='cpu.prof' -memprofile='mem.prof'
 
 .PHONY: cover-html
 cover-html: test

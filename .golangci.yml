@@ -24,3 +24,8 @@ linters-settings:
   funlen:
     lines: -1
     statements: -1
+
+  gomnd:
+    ignored-files:
+      - "examples/multiple/main.go"
+      - "examples/chain/main.go"
