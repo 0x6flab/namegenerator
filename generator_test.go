@@ -1,6 +1,7 @@
-// Copyright (c) 0x6flab. All rights reserved.
+// Copyright (c) 2023 0x6flab
 //
 // SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
+
 package namegenerator_test
 
 import (

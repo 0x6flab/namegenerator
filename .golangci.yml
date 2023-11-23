@@ -1,3 +1,7 @@
+# Copyright (c) 2023 0x6flab
+#
+# SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
+
 linters:
   enable-all: true
   fast: true
@@ -18,7 +22,7 @@ linters-settings:
       const:
         COMPANY: 0x6flab
     template: |-
-      Copyright (c) {{ COMPANY }}. All rights reserved.
+      Copyright (c) {{ YEAR }} {{ COMPANY }}
 
       SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
   funlen:
