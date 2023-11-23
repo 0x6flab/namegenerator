@@ -165,17 +165,17 @@ func test(t *testing.T, name, prefix, suffix string, firstNames, secondNames []s
 	}
 	name = strings.TrimSuffix(name, suffix)
 
-	if strings.Count(name, "-") == 1 {
-		if strings.Contains(name, "-") {
-			if !contains(firstNames, strings.Split(name, "-")[0]) {
-				t.Errorf("Generated name '%s' is not contained in the list of first names", name)
-			}
+	if !strings.Contains(name, "-") {
+		t.Errorf("Expected a name does not contain a family name separator, got %s", name)
+	}
 
-			if !contains(secondNames, strings.Split(name, "-")[1]) {
-				t.Errorf("Generated name '%s' is not contained in the list of second names", name)
-			}
-		} else {
-			t.Errorf("Expected a name does not contain a family name separator, got %s", name)
+	if strings.Count(name, "-") == 1 {
+		if !contains(firstNames, strings.Split(name, "-")[0]) {
+			t.Errorf("Generated name '%s' is not contained in the list of first names", name)
+		}
+
+		if !contains(secondNames, strings.Split(name, "-")[1]) {
+			t.Errorf("Generated name '%s' is not contained in the list of second names", name)
 		}
 	}
 }
