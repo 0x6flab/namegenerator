@@ -1,3 +1,7 @@
+# Copyright (c) 2023 0x6flab
+#
+# SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
+
 .PHONY: generate
 generate:
 	python namegenerator.py
