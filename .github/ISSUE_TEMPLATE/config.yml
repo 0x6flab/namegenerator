@@ -1,9 +1,0 @@
-# Copyright (c) 2023 0x6flab
-#
-# SPDX-License-Identifier: GNU GENERAL PUBLIC LICENSE
-
-blank_issues_enabled: false
-contact_links:
-  - name: GitHub Discussions
-    url: https://github.com/0x6flab/namegenerator/discussions
-    about: Join in-depth discussions about the namegenerator project. Ask questions, share your experiences, and connect with other maintainers and community members.
