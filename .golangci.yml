@@ -21,7 +21,7 @@ linters-settings:
     values:
       const:
         COMPANY: 0x6flab
-      regexp: 
+      regexp:
         YEAR: 20[0-9][0-9]
     template: |-
       Copyright (c) {{ YEAR }} {{ COMPANY }}
