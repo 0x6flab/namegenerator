@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/0x6flab/namegenerator/compare/v1.2.0...v1.3.0) (2024-02-17)
+
+
+### Features
+
+* add examples ([d7fc163](https://github.com/0x6flab/namegenerator/commit/d7fc163e08ec9f8ab1d8d8da1a66f664eb5579dc))
+* add examples ([#13](https://github.com/0x6flab/namegenerator/issues/13)) ([e65148e](https://github.com/0x6flab/namegenerator/commit/e65148e220396a1894d6e58b092c1bc02337eb96)), closes [#1234](https://github.com/0x6flab/namegenerator/issues/1234)
+* Add prefix and suffix options ([c74eaf1](https://github.com/0x6flab/namegenerator/commit/c74eaf1cb89a639ccde611355f8588d19ee077ca))
+* Add prefix and suffix options ([#12](https://github.com/0x6flab/namegenerator/issues/12)) ([9145b8e](https://github.com/0x6flab/namegenerator/commit/9145b8e8bfe078b261dc57a377ae2628d047fee8)), closes [#1234](https://github.com/0x6flab/namegenerator/issues/1234)
+* **ci:** update Go versions in CI workflow ([08390d1](https://github.com/0x6flab/namegenerator/commit/08390d10320584b16eab778e315ef13e41336f16))
+* update license ([ce1d09e](https://github.com/0x6flab/namegenerator/commit/ce1d09efa59b77da1ec70bbcd3b05f2070f3af8a))
+* update license ([#15](https://github.com/0x6flab/namegenerator/issues/15)) ([a598159](https://github.com/0x6flab/namegenerator/commit/a598159d8697d42e5ea6b778413edf0f74b1f4c7)), closes [#1234](https://github.com/0x6flab/namegenerator/issues/1234)
+
+
+### Bug Fixes
+
+* **generator_test:** Fix logic error when checking for family name separator ([685a821](https://github.com/0x6flab/namegenerator/commit/685a82147e156ff4b76b785375c2d9094628048f))
+* **test:** fix error message for name suffix ([f534bfb](https://github.com/0x6flab/namegenerator/commit/f534bfb7d0f728cec88f6345757d7f30c9a7c889))
+* tests with more than one `-` ([882f0a0](https://github.com/0x6flab/namegenerator/commit/882f0a01136d77fce0866aff37f8a1eaed493994))
+
 ## [1.2.0](https://github.com/0x6flab/namegenerator/compare/v1.1.0...v1.2.0) (2023-11-03)
 
 
