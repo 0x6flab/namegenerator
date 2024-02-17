@@ -27,7 +27,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 	}{
 		{
 			description:         "generate default name",
-			generator:           namegenerator.NewNameGenerator(),
+			generator:           namegenerator.NewGenerator(),
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
@@ -35,7 +35,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate male name",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Male),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Male),
 			expectedFirstNames:  namegenerator.MaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
@@ -43,7 +43,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate female name",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Female),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Female),
 			expectedFirstNames:  namegenerator.FemaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
@@ -51,7 +51,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate non-binary name",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.NonBinary),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.NonBinary),
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
@@ -59,7 +59,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate default name with prefix",
-			generator:           namegenerator.NewNameGenerator().WithPrefix(prefix),
+			generator:           namegenerator.NewGenerator().WithPrefix(prefix),
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      prefix,
@@ -67,7 +67,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate default name with suffix",
-			generator:           namegenerator.NewNameGenerator().WithSuffix(suffix),
+			generator:           namegenerator.NewGenerator().WithSuffix(suffix),
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
@@ -75,7 +75,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate default name with prefix and suffix",
-			generator:           namegenerator.NewNameGenerator().WithPrefix(prefix).WithSuffix(suffix),
+			generator:           namegenerator.NewGenerator().WithPrefix(prefix).WithSuffix(suffix),
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      prefix,
@@ -83,7 +83,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate male name with prefix",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Male).WithPrefix(prefix),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Male).WithPrefix(prefix),
 			expectedFirstNames:  namegenerator.MaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
@@ -91,7 +91,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate male name with suffix",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Male).WithSuffix(suffix),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Male).WithSuffix(suffix),
 			expectedFirstNames:  namegenerator.MaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
@@ -99,7 +99,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate male name with prefix and suffix",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Male).WithPrefix(prefix).WithSuffix(suffix),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Male).WithPrefix(prefix).WithSuffix(suffix),
 			expectedFirstNames:  namegenerator.MaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
@@ -107,7 +107,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate female name with prefix",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Female).WithPrefix(prefix),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Female).WithPrefix(prefix),
 			expectedFirstNames:  namegenerator.FemaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
@@ -115,7 +115,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate female name with suffix",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Female).WithSuffix(suffix),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Female).WithSuffix(suffix),
 			expectedFirstNames:  namegenerator.FemaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
@@ -123,7 +123,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		},
 		{
 			description:         "generate female name with prefix and suffix",
-			generator:           namegenerator.NewNameGenerator().WithGender(namegenerator.Female).WithPrefix(prefix).WithSuffix(suffix),
+			generator:           namegenerator.NewGenerator().WithGender(namegenerator.Female).WithPrefix(prefix).WithSuffix(suffix),
 			expectedFirstNames:  namegenerator.FemaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
@@ -137,7 +137,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 
 			test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.expectedFirstNames, tc.expectedSecondNames)
 
-			names := tc.generator.GenerateNames(5)
+			names := tc.generator.GenerateMultiple(5)
 
 			if len(names) != 5 {
 				t.Errorf("Expected 5 names, got %d", len(names))
@@ -191,22 +191,22 @@ func contains(slice []string, element string) bool {
 }
 
 func BenchmarkNameGenerator_Generate(b *testing.B) {
-	generator := namegenerator.NewNameGenerator()
+	generator := namegenerator.NewGenerator()
 	for i := 0; i < b.N; i++ {
 		generator.Generate()
 	}
 }
 
 func BenchmarkNameGenerator_Generate10Names(b *testing.B) {
-	generator := namegenerator.NewNameGenerator()
+	generator := namegenerator.NewGenerator()
 	for i := 0; i < b.N; i++ {
-		generator.GenerateNames(10)
+		generator.GenerateMultiple(10)
 	}
 }
 
 func BenchmarkNameGenerator_Generate1KNames(b *testing.B) {
-	generator := namegenerator.NewNameGenerator()
+	generator := namegenerator.NewGenerator()
 	for i := 0; i < b.N; i++ {
-		generator.GenerateNames(1000)
+		generator.GenerateMultiple(1000)
 	}
 }
