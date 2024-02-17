@@ -17,7 +17,7 @@ examples:
 
 .PHONY: test
 test:
-	go test --race -covermode=atomic -coverprofile cover.out ./...
+	go test --race -covermode=atomic -coverprofile cover.out $(go list ./... | grep -v /examples)
 
 .PHONY: bench
 bench:
