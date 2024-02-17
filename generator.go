@@ -28,27 +28,27 @@ type NameGenerator interface {
 	// Generate generates a name based on the gender.
 	//
 	// Example:
-	//  generator := namegenerator.NewNameGenerator()
+	//  generator := namegenerator.NewGenerator()
 	//  name := generator.Generate()
 	//  fmt.Println(name)
 	// Output:
 	//  `John-Smith`
 	Generate() string
 
-	// GenerateNames generates a list of names.
+	// GenerateMultiple generates a list of names.
 	//
 	// Example:
-	//  generator := namegenerator.NewNameGenerator()
-	//  names := generator.GenerateNames(10)
+	//  generator := namegenerator.NewGenerator()
+	//  names := generator.GenerateMultiple(10)
 	//  fmt.Println(names)
 	// Output:
 	//  `[Dryke-Monroe Scarface-Lesway Shelden-Corsale Marcus-Ivett Victor-Nesrallah Merril-Gulick Leonardo-Lindler Maurits-Lias Rawley-Connor Elvis-Khouderchah]`
-	GenerateNames(count int) []string
+	GenerateMultiple(count int) []string
 
 	// WithGender generates a name based on the gender.
 	//
 	// Example:
-	//  generator := namegenerator.NewNameGenerator().WithGender(namegenerator.Male)
+	//  generator := namegenerator.NewGenerator().WithGender(namegenerator.Male)
 	//  name := generator.Generate()
 	//  fmt.Println(name)
 	// Output:
@@ -58,7 +58,7 @@ type NameGenerator interface {
 	// WithPrefix generates a name with a prefix.
 	//
 	// Example:
-	//  generator := namegenerator.NewNameGenerator().WithPrefix("Mr. ")
+	//  generator := namegenerator.NewGenerator().WithPrefix("Mr. ")
 	//  name := generator.Generate()
 	//  fmt.Println(name)
 	// Output:
@@ -68,7 +68,7 @@ type NameGenerator interface {
 	// WithSuffix generates a name with a suffix.
 	//
 	// Example:
-	//  generator := namegenerator.NewNameGenerator().WithSuffix("@gmail.com")
+	//  generator := namegenerator.NewGenerator().WithSuffix("@gmail.com")
 	//  name := generator.Generate()
 	//  fmt.Println(name)
 	// Output:
@@ -83,32 +83,32 @@ type nameGenerator struct {
 	suffix string
 }
 
-// NewNameGenerator returns a new NameGenerator.
+// NewGenerator returns a new NameGenerator.
 //
 // Example to generate general names:
 //
-//	generator := namegenerator.NewNameGenerator()
+//	generator := namegenerator.NewGenerator()
 //
 // Example to generate male names:
 //
-//	generator := namegenerator.NewNameGenerator().WithGender(namegenerator.Male)
+//	generator := namegenerator.NewGenerator().WithGender(namegenerator.Male)
 //
 // Example to generate female names:
 //
-//	generator := namegenerator.NewNameGenerator().WithGender(namegenerator.Female)
+//	generator := namegenerator.NewGenerator().WithGender(namegenerator.Female)
 //
 // Example to generate non-binary names:
 //
-//	generator := namegenerator.NewNameGenerator().WithGender(namegenerator.NonBinary)
+//	generator := namegenerator.NewGenerator().WithGender(namegenerator.NonBinary)
 //
 // Example to generate names with a prefix:
 //
-//	generator := namegenerator.NewNameGenerator().WithPrefix("Mr. ")
+//	generator := namegenerator.NewGenerator().WithPrefix("Mr. ")
 //
 // Example to generate names with a suffix:
 //
-//	generator := namegenerator.NewNameGenerator().WithSuffix("@gmail.com")
-func NewNameGenerator() NameGenerator {
+//	generator := namegenerator.NewGenerator().WithSuffix("@gmail.com")
+func NewGenerator() NameGenerator {
 	return &nameGenerator{
 		gender: NonBinary,
 	}
@@ -155,7 +155,7 @@ func (namegen *nameGenerator) Generate() string {
 	}
 }
 
-func (namegen *nameGenerator) GenerateNames(count int) []string {
+func (namegen *nameGenerator) GenerateMultiple(count int) []string {
 	names := make([]string, count)
 	for i := 0; i < count; i++ {
 		names[i] = namegen.Generate()

@@ -11,59 +11,59 @@ import (
 )
 
 func main() {
-	generator := namegenerator.NewNameGenerator()
+	generator := namegenerator.NewGenerator()
 	name := generator.Generate()
 	fmt.Println(name)
 
-	names := generator.GenerateNames(10)
+	names := generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Male)
+	generator = namegenerator.NewGenerator().WithGender(namegenerator.Male)
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Female)
+	generator = namegenerator.NewGenerator().WithGender(namegenerator.Female)
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.NonBinary)
+	generator = namegenerator.NewGenerator().WithGender(namegenerator.NonBinary)
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithPrefix("Dr. ")
+	generator = namegenerator.NewGenerator().WithPrefix("Dr. ")
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithSuffix(" Jr.")
+	generator = namegenerator.NewGenerator().WithSuffix(" Jr.")
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithPrefix("Dr. ").WithSuffix(" Jr.")
+	generator = namegenerator.NewGenerator().WithPrefix("Dr. ").WithSuffix(" Jr.")
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 
-	generator = namegenerator.NewNameGenerator().WithGender(namegenerator.Male).WithPrefix("Dr. ").WithSuffix(" Jr.")
+	generator = namegenerator.NewGenerator().WithGender(namegenerator.Male).WithPrefix("Dr. ").WithSuffix(" Jr.")
 	name = generator.Generate()
 	fmt.Println(name)
 
-	names = generator.GenerateNames(10)
+	names = generator.GenerateMultiple(10)
 	fmt.Println(names)
 }
