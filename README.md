@@ -29,7 +29,7 @@ import (
 )
 
 func main() {
-    generator := namegenerator.NewNameGenerator()
+    generator := namegenerator.NewGenerator()
 
     // Generate a random name
     name := generator.Generate()
@@ -45,6 +45,6 @@ See [examples](./examples) directory for more examples.
 
 ## License
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the Apache-2.0 LICENSE - see the [LICENSE](./LICENSE) file for details.
 
 [names-dataset]: https://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/areas/nlp/corpora/0.html
