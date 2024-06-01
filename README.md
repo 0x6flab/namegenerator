@@ -43,6 +43,42 @@ func main() {
 
 See [examples](./examples) directory for more examples.
 
+## Benchmarks
+
+Benchmark tests can be found in [test](benchmark_test.go) file and collision tests can be found in [test](collision_test.go) file.
+
+```bash
+goos: linux
+goarch: amd64
+pkg: github.com/0x6flab/namegenerator
+cpu: AMD Ryzen 7 7735HS with Radeon Graphics
+BenchmarkNameGenerator_Generate-16                967677              1158 ns/op
+BenchmarkNameGenerator_Generate10Names-16          97788             11577 ns/op
+BenchmarkNameGenerator_Generate1KNames-16            973           1156777 ns/op
+BenchmarkNameGenerator_Generate10KNames-16            88          11594857 ns/op
+```
+
+For collision tests:
+
+| Number of Names | Options                       | Collisions | Collision range |
+| --------------- | ----------------------------- | ---------- | --------------- |
+| 1K              | with random string (2) or (5) | 0          | 0               |
+| 10K             | with random string (2) or (5) | 0          | 0               |
+| 100K            | with random string (2) or (5) | 0          | 0               |
+| 1M              | with random string (2) or (5) | 0          | 0               |
+| 1K              | without                       | 0          | 0               |
+| 10K             | without                       | 0          | 0               |
+| 100K            | without                       | 1          | 0-5             |
+| 1M              | without                       | 147        | 135-163         |
+| 1K              | male names                    | 0          | 0               |
+| 10K             | male names                    | 1          | 0-4             |
+| 100K            | male names                    | 127        | 105-152         |
+| 1M              | male names                    | 12516      | 12394-12630     |
+| 1K              | female names                  | 0          | 0               |
+| 10K             | female names                  | 0          | 0-3             |
+| 100K            | female names                  | 74         | 57-98           |
+| 1M              | female names                  | 7404       | 7289 - 7542     |
+
 ## License
 
 This project is licensed under the Apache-2.0 LICENSE - see the [LICENSE](./LICENSE) file for details.

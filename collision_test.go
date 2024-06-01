@@ -14,53 +14,77 @@ import (
 )
 
 func TestCollision(t *testing.T) {
-	generator := namegenerator.NewGenerator()
-	names := make(map[string]bool)
+	testCases := []struct {
+		descrition string
+		options    []namegenerator.Options
+	}{
+		{
+			descrition: "No options",
+			options:    []namegenerator.Options{},
+		},
+		{
+			descrition: "With Male Gender",
+			options:    []namegenerator.Options{namegenerator.WithGender(namegenerator.Male)},
+		},
+		{
+			descrition: "With Female Gender",
+			options:    []namegenerator.Options{namegenerator.WithGender(namegenerator.Female)},
+		},
+		{
+			descrition: "With Random String of length 2",
+			options:    []namegenerator.Options{namegenerator.WithRandomString(2)},
+		},
+		{
+			descrition: "With Random String of length 5",
+			options:    []namegenerator.Options{namegenerator.WithRandomString(5)},
+		},
+	}
 
-	for i := 0; i < 1000; i++ {
-		name := generator.Generate()
-		if _, ok := names[name]; ok {
-			t.Errorf("Generated a duplicate name: %s", name)
-		}
-		names[name] = true
+	for _, tc := range testCases {
+		t.Run(tc.descrition, func(t *testing.T) {
+			generator := namegenerator.NewGenerator()
+
+			metrics(t, generator, tc.options, tc.descrition, 1000)
+			metrics(t, generator, tc.options, tc.descrition, 10000)
+			metrics(t, generator, tc.options, tc.descrition, 100000)
+			// metrics(t, generator, tc.options, tc.descrition, 1000000)
+		})
 	}
 }
 
-func TestMaleCollision(t *testing.T) {
-	generator := namegenerator.NewGenerator().WithGender(namegenerator.Male)
-	names := make(map[string]bool)
-
-	for i := 0; i < 1000; i++ {
-		name := generator.Generate()
-		if _, ok := names[name]; ok {
-			t.Errorf("Generated a duplicate name: %s", name)
+func getNonUnique(names []string) int {
+	unique := 0
+	uniqueNames := make(map[string]bool)
+	for _, name := range names {
+		if _, ok := uniqueNames[name]; !ok {
+			unique++
+			uniqueNames[name] = true
 		}
-		names[name] = true
 	}
+
+	return len(names) - unique
 }
 
-func TestFemaleCollision(t *testing.T) {
-	generator := namegenerator.NewGenerator().WithGender(namegenerator.Female)
-	names := make(map[string]bool)
-
-	for i := 0; i < 1000; i++ {
-		name := generator.Generate()
-		if _, ok := names[name]; ok {
-			t.Errorf("Generated a duplicate name: %s", name)
-		}
-		names[name] = true
+func metrics(t *testing.T, generator namegenerator.NameGenerator, options []namegenerator.Options, desc string, num int) {
+	max := 0
+	min := num
+	average := 0
+	iter := 30
+	if num == 1000000 {
+		iter = 11
 	}
-}
-
-func TestWithRandomStringCollision(t *testing.T) {
-	generator := namegenerator.NewGenerator().WithRandomString(2)
-	names := make(map[string]bool)
-
-	for i := 0; i < 1000000; i++ {
-		name := generator.Generate()
-		if _, ok := names[name]; ok {
-			t.Errorf("Generated a duplicate name: %s", name)
+	for i := 0; i < iter; i++ {
+		names := generator.GenerateMultiple(num, options...)
+		nonUnique := getNonUnique(names)
+		if nonUnique > max {
+			max = nonUnique
 		}
-		names[name] = true
+		if nonUnique < min {
+			min = nonUnique
+		}
+		average += nonUnique
 	}
+	average /= iter
+
+	t.Logf("%d %s: Max %d, Min %d, Average %d", num, desc, max, min, average)
 }
