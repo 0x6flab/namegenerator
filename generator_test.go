@@ -132,6 +132,14 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedPrefix:      prefix,
 			expectedSuffix:      suffix,
 		},
+		{
+			description:         "generate name with random string",
+			generator:           namegenerator.NewGenerator().WithRandomString(5),
+			expectedFirstNames:  namegenerator.GeneralNames,
+			expectedSecondNames: namegenerator.GeneralNames,
+			expectedPrefix:      "",
+			expectedSuffix:      "",
+		},
 	}
 
 	for _, tc := range testcase {
@@ -172,14 +180,12 @@ func test(t *testing.T, name, prefix, suffix string, firstNames, secondNames []s
 		t.Errorf("Expected a name does not contain a family name separator, got %s", name)
 	}
 
-	if strings.Count(name, "-") == 1 {
-		if !contains(firstNames, strings.Split(name, "-")[0]) {
-			t.Errorf("Generated name '%s' is not contained in the list of first names", name)
-		}
+	if len(strings.Split(name, "-")) > 0 && !contains(firstNames, strings.Split(name, "-")[0]) {
+		t.Errorf("Generated name '%s' is not contained in the list of first names", name)
+	}
 
-		if !contains(secondNames, strings.Split(name, "-")[1]) {
-			t.Errorf("Generated name '%s' is not contained in the list of second names", name)
-		}
+	if len(strings.Split(name, "-")) > 1 && !contains(secondNames, strings.Split(name, "-")[1]) {
+		t.Errorf("Generated name '%s' is not contained in the list of second names", name)
 	}
 }
 
@@ -191,25 +197,4 @@ func contains(slice []string, element string) bool {
 	}
 
 	return false
-}
-
-func BenchmarkNameGenerator_Generate(b *testing.B) {
-	generator := namegenerator.NewGenerator()
-	for i := 0; i < b.N; i++ {
-		generator.Generate()
-	}
-}
-
-func BenchmarkNameGenerator_Generate10Names(b *testing.B) {
-	generator := namegenerator.NewGenerator()
-	for i := 0; i < b.N; i++ {
-		generator.GenerateMultiple(10)
-	}
-}
-
-func BenchmarkNameGenerator_Generate1KNames(b *testing.B) {
-	generator := namegenerator.NewGenerator()
-	for i := 0; i < b.N; i++ {
-		generator.GenerateMultiple(1000)
-	}
 }

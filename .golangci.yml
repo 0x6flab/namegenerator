@@ -9,14 +9,10 @@ linters:
   enable-all: true
   fast: true
   disable:
-    - misspell
     - lll
     - wsl
     - depguard
     - scopelint
-    - nosnakecase
-    - ifshort
-    - gocognit
     - gochecknoinits
 
 linters-settings:
@@ -36,7 +32,5 @@ linters-settings:
   funlen:
     lines: -1
     statements: -1
-
-  gomnd:
-    ignored-files:
-      - "examples/main.go"
+  gocritic:
+    enable-all: true

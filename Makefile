@@ -20,11 +20,11 @@ examples:
 
 .PHONY: test
 test:
-	go test --race -covermode=atomic -coverprofile cover.out $(go list ./... | grep -v /examples)
+	go test -v --race -covermode=atomic -coverprofile cover.out $(go list ./... | grep -v /examples)
 
 .PHONY: bench
 bench:
-	go test -bench='.' -cpuprofile='cpu.prof' -memprofile='mem.prof'
+	go test -v -bench='.' -cpuprofile='cpu.prof' -memprofile='mem.prof'
 
 .PHONY: cover-html
 cover-html: test
