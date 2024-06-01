@@ -36,7 +36,13 @@ type NameGenerator interface {
 	//  fmt.Println(name)
 	// Output:
 	//  `John-Smith`
-	Generate() string
+	// Example with options:
+	//  generator := namegenerator.NewGenerator()
+	//  name := generator.Generate(namegenerator.WithGender(namegenerator.Male))
+	//  fmt.Println(name)
+	// Output:
+	//  `John-Smith`
+	Generate(options ...Options) string
 
 	// GenerateMultiple generates a list of names.
 	//
@@ -44,9 +50,11 @@ type NameGenerator interface {
 	//  generator := namegenerator.NewGenerator()
 	//  names := generator.GenerateMultiple(10)
 	//  fmt.Println(names)
-	// Output:
-	//  `[Dryke-Monroe Scarface-Lesway Shelden-Corsale Marcus-Ivett Victor-Nesrallah Merril-Gulick Leonardo-Lindler Maurits-Lias Rawley-Connor Elvis-Khouderchah]`
-	GenerateMultiple(count int) []string
+	// Example with options:
+	//  generator := namegenerator.NewGenerator()
+	//  names := generator.GenerateMultiple(10, namegenerator.WithGender(namegenerator.Male))
+	//  fmt.Println(names)
+	GenerateMultiple(count int, options ...Options) []string
 
 	// WithGender generates a name based on the gender.
 	//
@@ -77,13 +85,24 @@ type NameGenerator interface {
 	// Output:
 	//  `John-Smith@gmail.com`
 	WithSuffix(suffix string) NameGenerator
+
+	// WithRandomString generates a name with a random string.
+	//
+	// Example:
+	//  generator := namegenerator.NewGenerator().WithRandomString(5)
+	//  name := generator.Generate()
+	//  fmt.Println(name)
+	// Output:
+	//  `John-Smith-abcde`
+	WithRandomString(lenOfRandomString int) NameGenerator
 }
 
 // nameGenerator is a struct that implements NameGenerator.
 type nameGenerator struct {
-	gender Gender
-	prefix string
-	suffix string
+	gender            Gender
+	prefix            string
+	suffix            string
+	lenOfRandomString int
 }
 
 // NewGenerator returns a new NameGenerator.
@@ -111,9 +130,16 @@ type nameGenerator struct {
 // Example to generate names with a suffix:
 //
 //	generator := namegenerator.NewGenerator().WithSuffix("@gmail.com")
+//
+// Example to generate names with a random string:
+//
+//	generator := namegenerator.NewGenerator().WithRandomString(5)
 func NewGenerator() NameGenerator {
 	return &nameGenerator{
-		gender: NonBinary,
+		gender:            NonBinary,
+		prefix:            "",
+		suffix:            "",
+		lenOfRandomString: 0,
 	}
 }
 
@@ -135,18 +161,33 @@ func (namegen *nameGenerator) WithSuffix(suffix string) NameGenerator {
 	return namegen
 }
 
-func (namegen *nameGenerator) Generate() string {
+func (namegen *nameGenerator) WithRandomString(lenOfRandomString int) NameGenerator {
+	namegen.lenOfRandomString = lenOfRandomString
+
+	return namegen
+}
+
+func (namegen *nameGenerator) Generate(options ...Options) string {
+	for _, option := range options {
+		option(namegen)
+	}
+
+	randomName := ""
+	if namegen.lenOfRandomString > 0 {
+		randomName = "-" + namegen.generateRandomString(namegen.lenOfRandomString)
+	}
+
 	switch namegen.gender {
 	case Male:
 		grandom := namegen.generateRandomNumber(len(MaleNames))
 		frandom := namegen.generateRandomNumber(len(FamilyNames))
 
-		return namegen.prefix + MaleNames[grandom] + "-" + FamilyNames[frandom] + namegen.suffix
+		return namegen.prefix + MaleNames[grandom] + "-" + FamilyNames[frandom] + randomName + namegen.suffix
 	case Female:
 		grandom := namegen.generateRandomNumber(len(FemaleNames))
 		frandom := namegen.generateRandomNumber(len(FamilyNames))
 
-		return namegen.prefix + FemaleNames[grandom] + "-" + FamilyNames[frandom] + namegen.suffix
+		return namegen.prefix + FemaleNames[grandom] + "-" + FamilyNames[frandom] + randomName + namegen.suffix
 	case NonBinary:
 		fallthrough
 	// This condition never happens, but it's here to make the compiler happy.
@@ -154,11 +195,15 @@ func (namegen *nameGenerator) Generate() string {
 		g1random := namegen.generateRandomNumber(len(GeneralNames))
 		g2random := namegen.generateRandomNumber(len(GeneralNames))
 
-		return namegen.prefix + GeneralNames[g1random] + "-" + GeneralNames[g2random] + namegen.suffix
+		return namegen.prefix + GeneralNames[g1random] + "-" + GeneralNames[g2random] + randomName + namegen.suffix
 	}
 }
 
-func (namegen *nameGenerator) GenerateMultiple(count int) []string {
+func (namegen *nameGenerator) GenerateMultiple(count int, options ...Options) []string {
+	for _, option := range options {
+		option(namegen)
+	}
+
 	names := make([]string, count)
 	for i := 0; i < count; i++ {
 		names[i] = namegen.Generate()
@@ -176,4 +221,16 @@ func (namegen *nameGenerator) generateRandomNumber(max int) uint64 {
 	}
 
 	return random.Uint64()
+}
+
+// generateRandomString generates a random string.
+func (namegen *nameGenerator) generateRandomString(length int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	b := make([]byte, length)
+	for i := range b {
+		random := namegen.generateRandomNumber(len(charset))
+		b[i] = charset[random]
+	}
+
+	return string(b)
 }

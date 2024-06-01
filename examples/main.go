@@ -21,6 +21,13 @@ func main() {
 	names := generator.GenerateMultiple(10)
 	fmt.Println(names)
 
+	generator = namegenerator.NewGenerator().WithRandomString(5)
+	name = generator.Generate()
+	fmt.Println(name)
+
+	names = generator.GenerateMultiple(10)
+	fmt.Println(names)
+
 	generator = namegenerator.NewGenerator().WithGender(namegenerator.Male)
 	name = generator.Generate()
 	fmt.Println(name)
@@ -68,5 +75,12 @@ func main() {
 	fmt.Println(name)
 
 	names = generator.GenerateMultiple(10)
+	fmt.Println(names)
+
+	generator = namegenerator.NewGenerator()
+	name = generator.Generate(namegenerator.WithGender(namegenerator.Male), namegenerator.WithPrefix("Dr. "), namegenerator.WithSuffix(" Jr."), namegenerator.WithRandomString(5))
+	fmt.Println(name)
+
+	names = generator.GenerateMultiple(10, namegenerator.WithGender(namegenerator.Male), namegenerator.WithPrefix("Dr. "), namegenerator.WithSuffix(" Jr."), namegenerator.WithRandomString(5))
 	fmt.Println(names)
 }

@@ -132,6 +132,14 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedPrefix:      prefix,
 			expectedSuffix:      suffix,
 		},
+		{
+			description:         "generate name with random string",
+			generator:           namegenerator.NewGenerator().WithRandomString(5),
+			expectedFirstNames:  namegenerator.GeneralNames,
+			expectedSecondNames: namegenerator.GeneralNames,
+			expectedPrefix:      "",
+			expectedSuffix:      "",
+		},
 	}
 
 	for _, tc := range testcase {
@@ -191,25 +199,4 @@ func contains(slice []string, element string) bool {
 	}
 
 	return false
-}
-
-func BenchmarkNameGenerator_Generate(b *testing.B) {
-	generator := namegenerator.NewGenerator()
-	for i := 0; i < b.N; i++ {
-		generator.Generate()
-	}
-}
-
-func BenchmarkNameGenerator_Generate10Names(b *testing.B) {
-	generator := namegenerator.NewGenerator()
-	for i := 0; i < b.N; i++ {
-		generator.GenerateMultiple(10)
-	}
-}
-
-func BenchmarkNameGenerator_Generate1KNames(b *testing.B) {
-	generator := namegenerator.NewGenerator()
-	for i := 0; i < b.N; i++ {
-		generator.GenerateMultiple(1000)
-	}
 }
