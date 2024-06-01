@@ -77,7 +77,7 @@ For collision tests:
 | 1K              | female names                  | 0          | 0               |
 | 10K             | female names                  | 0          | 0-3             |
 | 100K            | female names                  | 74         | 57-98           |
-| 1M              | female names                  | 7404       | 7289 - 7542     |
+| 1M              | female names                  | 7404       | 7289-7542       |
 
 ## License
 

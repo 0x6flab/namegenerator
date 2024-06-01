@@ -23,7 +23,7 @@ func TestOptions(t *testing.T) {
 		expectedSecondNames []string
 	}{
 		{
-			description:         "without geneder option",
+			description:         "without gender option",
 			options:             []namegenerator.Options{},
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,

@@ -15,39 +15,39 @@ import (
 
 func TestCollision(t *testing.T) {
 	testCases := []struct {
-		descrition string
-		options    []namegenerator.Options
+		description string
+		options     []namegenerator.Options
 	}{
 		{
-			descrition: "No options",
-			options:    []namegenerator.Options{},
+			description: "No options",
+			options:     []namegenerator.Options{},
 		},
 		{
-			descrition: "With Male Gender",
-			options:    []namegenerator.Options{namegenerator.WithGender(namegenerator.Male)},
+			description: "With Male Gender",
+			options:     []namegenerator.Options{namegenerator.WithGender(namegenerator.Male)},
 		},
 		{
-			descrition: "With Female Gender",
-			options:    []namegenerator.Options{namegenerator.WithGender(namegenerator.Female)},
+			description: "With Female Gender",
+			options:     []namegenerator.Options{namegenerator.WithGender(namegenerator.Female)},
 		},
 		{
-			descrition: "With Random String of length 2",
-			options:    []namegenerator.Options{namegenerator.WithRandomString(2)},
+			description: "With Random String of length 2",
+			options:     []namegenerator.Options{namegenerator.WithRandomString(2)},
 		},
 		{
-			descrition: "With Random String of length 5",
-			options:    []namegenerator.Options{namegenerator.WithRandomString(5)},
+			description: "With Random String of length 5",
+			options:     []namegenerator.Options{namegenerator.WithRandomString(5)},
 		},
 	}
 
 	for _, tc := range testCases {
-		t.Run(tc.descrition, func(t *testing.T) {
+		t.Run(tc.description, func(t *testing.T) {
 			generator := namegenerator.NewGenerator()
 
-			metrics(t, generator, tc.options, tc.descrition, 1000)
-			metrics(t, generator, tc.options, tc.descrition, 10000)
-			metrics(t, generator, tc.options, tc.descrition, 100000)
-			// metrics(t, generator, tc.options, tc.descrition, 1000000)
+			metrics(t, generator, tc.options, tc.description, 1000)
+			metrics(t, generator, tc.options, tc.description, 10000)
+			metrics(t, generator, tc.options, tc.description, 100000)
+			// metrics(t, generator, tc.options, tc.description, 1000000)
 		})
 	}
 }
