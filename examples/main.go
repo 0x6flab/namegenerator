@@ -21,6 +21,9 @@ func main() {
 	names := generator.GenerateMultiple(10)
 	fmt.Println(names)
 
+	details := generator.GenerateNameAndEmail()
+	fmt.Printf("Names and Emails: Name: %s, Email: %s \n", details.Name, details.Email)
+
 	generator = namegenerator.NewGenerator().WithRandomString(5)
 	name = generator.Generate()
 	fmt.Println(name)

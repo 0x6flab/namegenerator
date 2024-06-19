@@ -56,6 +56,18 @@ type NameGenerator interface {
 	//  fmt.Println(names)
 	GenerateMultiple(count int, options ...Options) []string
 
+	// GenerateMultiple generates a list of names.
+	//
+	// Example:
+	//  generator := namegenerator.NewGenerator()
+	//  name := generator.GenerateNameAndEmail()
+	//  fmt.Println(name)
+	// Example with options:
+	//  generator := namegenerator.NewGenerator()
+	//  name := generator.GenerateNameAndEmail(namegenerator.WithGender(namegenerator.Male))
+	//  fmt.Println(name)
+	GenerateNameAndEmail(options ...Options) details
+
 	// WithGender generates a name based on the gender.
 	//
 	// Example:
@@ -103,6 +115,11 @@ type nameGenerator struct {
 	prefix            string
 	suffix            string
 	lenOfRandomString int
+}
+
+type details struct {
+	Name  string
+	Email string
 }
 
 // NewGenerator returns a new NameGenerator.
@@ -196,6 +213,48 @@ func (namegen *nameGenerator) Generate(options ...Options) string {
 		g2random := namegen.generateRandomNumber(len(GeneralNames))
 
 		return namegen.prefix + GeneralNames[g1random] + "-" + GeneralNames[g2random] + randomName + namegen.suffix
+	}
+}
+
+func (namegen *nameGenerator) GenerateNameAndEmail(options ...Options) details {
+	for _, option := range options {
+		option(namegen)
+	}
+
+	randomName := ""
+	if namegen.lenOfRandomString > 0 {
+		randomName = "-" + namegen.generateRandomString(namegen.lenOfRandomString)
+	}
+
+	switch namegen.gender {
+	case Male:
+		grandom := namegen.generateRandomNumber(len(MaleNames))
+		frandom := namegen.generateRandomNumber(len(FamilyNames))
+
+		return details{
+			Name:  namegen.prefix + MaleNames[grandom] + " " + FamilyNames[frandom] + randomName + namegen.suffix,
+			Email: MaleNames[grandom] + "." + FamilyNames[frandom] + "@example.com",
+		}
+	case Female:
+		grandom := namegen.generateRandomNumber(len(FemaleNames))
+		frandom := namegen.generateRandomNumber(len(FamilyNames))
+
+		return details{
+			Name:  namegen.prefix + FemaleNames[grandom] + " " + FamilyNames[frandom] + randomName + namegen.suffix,
+			Email: FemaleNames[grandom] + "." + FamilyNames[frandom] + "@example.com",
+		}
+
+	case NonBinary:
+		fallthrough
+	// This condition never happens, but it's here to make the compiler happy.
+	default:
+		g1random := namegen.generateRandomNumber(len(GeneralNames))
+		g2random := namegen.generateRandomNumber(len(GeneralNames))
+
+		return details{
+			Name:  namegen.prefix + GeneralNames[g1random] + " " + GeneralNames[g2random] + randomName + namegen.suffix,
+			Email: GeneralNames[g1random] + "." + GeneralNames[g2random] + "@example.com",
+		}
 	}
 }
 
