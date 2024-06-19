@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/0x6flab/namegenerator/compare/v1.3.1...v1.4.0) (2024-06-19)
+
+
+### Features
+
+* **generator:** Add options pattern and new randomstring option ([beaeff2](https://github.com/0x6flab/namegenerator/commit/beaeff238d7c196b117b8e4814395ea657296c3d))
+
+
+### Bug Fixes
+
+* tests ([5a7e744](https://github.com/0x6flab/namegenerator/commit/5a7e7442e27a82ef559a9594af788efb1446a3f2))
+* typos ([6205018](https://github.com/0x6flab/namegenerator/commit/620501834ee47457e5421f4c3d36374df4290c28))
+
 ### [1.3.1](https://github.com/0x6flab/namegenerator/compare/v1.3.0...v1.3.1) (2024-04-02)
 
 ## [1.3.0](https://github.com/0x6flab/namegenerator/compare/v1.2.0...v1.3.0) (2024-02-17)
