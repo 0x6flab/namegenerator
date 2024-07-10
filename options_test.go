@@ -21,36 +21,42 @@ func TestOptions(t *testing.T) {
 		suffix              string
 		expectedFirstNames  []string
 		expectedSecondNames []string
+		separator           string
 	}{
 		{
 			description:         "without gender option",
 			options:             []namegenerator.Options{},
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "with male gender option",
 			options:             []namegenerator.Options{namegenerator.WithGender(namegenerator.Male)},
 			expectedFirstNames:  namegenerator.MaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
+			separator:           "-",
 		},
 		{
 			description:         "with female gender option",
 			options:             []namegenerator.Options{namegenerator.WithGender(namegenerator.Female)},
 			expectedFirstNames:  namegenerator.FemaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
+			separator:           "-",
 		},
 		{
 			description:         "with non-binary gender option",
 			options:             []namegenerator.Options{namegenerator.WithGender(namegenerator.NonBinary)},
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "without prefix option",
 			options:             []namegenerator.Options{},
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "with prefix option",
@@ -58,12 +64,14 @@ func TestOptions(t *testing.T) {
 			prefix:              "Dr. ",
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "without suffix option",
 			options:             []namegenerator.Options{},
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "with suffix option",
@@ -71,6 +79,7 @@ func TestOptions(t *testing.T) {
 			suffix:              " Jr.",
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "with prefix and suffix option",
@@ -79,6 +88,7 @@ func TestOptions(t *testing.T) {
 			suffix:              " Jr.",
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
 		},
 		{
 			description:         "with female gender and prefix and suffix option",
@@ -87,6 +97,7 @@ func TestOptions(t *testing.T) {
 			suffix:              " Jr.",
 			expectedFirstNames:  namegenerator.FemaleNames,
 			expectedSecondNames: namegenerator.FamilyNames,
+			separator:           "-",
 		},
 		{
 			description:         "with random string option",
@@ -94,6 +105,23 @@ func TestOptions(t *testing.T) {
 			suffix:              "",
 			expectedFirstNames:  namegenerator.GeneralNames,
 			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
+		},
+		{
+			description:         "with default separator",
+			options:             []namegenerator.Options{namegenerator.WithSeparator("-")},
+			suffix:              "",
+			expectedFirstNames:  namegenerator.GeneralNames,
+			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "-",
+		},
+		{
+			description:         "with different separator",
+			options:             []namegenerator.Options{namegenerator.WithSeparator("*")},
+			suffix:              "",
+			expectedFirstNames:  namegenerator.GeneralNames,
+			expectedSecondNames: namegenerator.GeneralNames,
+			separator:           "*",
 		},
 	}
 	for _, tc := range testcase {
@@ -101,7 +129,7 @@ func TestOptions(t *testing.T) {
 			nameGenerator := namegenerator.NewGenerator()
 
 			name := nameGenerator.Generate(tc.options...)
-			test(t, name, tc.prefix, tc.suffix, tc.expectedFirstNames, tc.expectedSecondNames)
+			test(t, name, tc.prefix, tc.suffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
 
 			names := nameGenerator.GenerateMultiple(5, tc.options...)
 
@@ -110,7 +138,7 @@ func TestOptions(t *testing.T) {
 			}
 
 			for _, name := range names {
-				test(t, name, tc.prefix, tc.suffix, tc.expectedFirstNames, tc.expectedSecondNames)
+				test(t, name, tc.prefix, tc.suffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
 			}
 		})
 	}

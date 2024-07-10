@@ -8,19 +8,7 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-      day: "sunday"
-      time: "06:00"
-      timezone: "Africa/Nairobi"
-    assignees:
-      - "rodneyosodo"
-    reviewers:
-      - "rodneyosodo"
-
-  - package-ecosystem: "gomod"
-    directory: "/"
+    directory: "./.github/workflows"
     schedule:
       interval: "monthly"
       day: "sunday"
