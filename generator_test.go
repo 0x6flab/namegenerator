@@ -27,6 +27,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		expectedSecondNames []string
 		expectedPrefix      string
 		expectedSuffix      string
+		separator           string
 	}{
 		{
 			description:         "generate default name",
@@ -35,6 +36,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate male name",
@@ -43,6 +45,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate female name",
@@ -51,6 +54,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate non-binary name",
@@ -59,6 +63,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate default name with prefix",
@@ -67,6 +72,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      prefix,
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate default name with suffix",
@@ -75,6 +81,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
 			expectedSuffix:      suffix,
+			separator:           "-",
 		},
 		{
 			description:         "generate default name with prefix and suffix",
@@ -83,6 +90,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      prefix,
 			expectedSuffix:      suffix,
+			separator:           "-",
 		},
 		{
 			description:         "generate male name with prefix",
@@ -91,6 +99,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate male name with suffix",
@@ -99,6 +108,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
 			expectedSuffix:      suffix,
+			separator:           "-",
 		},
 		{
 			description:         "generate male name with prefix and suffix",
@@ -107,6 +117,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
 			expectedSuffix:      suffix,
+			separator:           "-",
 		},
 		{
 			description:         "generate female name with prefix",
@@ -115,6 +126,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
 			expectedSuffix:      "",
+			separator:           "-",
 		},
 		{
 			description:         "generate female name with suffix",
@@ -123,6 +135,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      "",
 			expectedSuffix:      suffix,
+			separator:           "-",
 		},
 		{
 			description:         "generate female name with prefix and suffix",
@@ -131,6 +144,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.FamilyNames,
 			expectedPrefix:      prefix,
 			expectedSuffix:      suffix,
+			separator:           "-",
 		},
 		{
 			description:         "generate name with random string",
@@ -139,6 +153,25 @@ func TestNameGenerator_Generate(t *testing.T) {
 			expectedSecondNames: namegenerator.GeneralNames,
 			expectedPrefix:      "",
 			expectedSuffix:      "",
+			separator:           "-",
+		},
+		{
+			description:         "generate name with separator as asterisk",
+			generator:           namegenerator.NewGenerator().WithSeparator("*"),
+			expectedFirstNames:  namegenerator.GeneralNames,
+			expectedSecondNames: namegenerator.GeneralNames,
+			expectedPrefix:      "",
+			expectedSuffix:      "",
+			separator:           "*",
+		},
+		{
+			description:         "generate name with separator as space",
+			generator:           namegenerator.NewGenerator().WithSeparator(" "),
+			expectedFirstNames:  namegenerator.GeneralNames,
+			expectedSecondNames: namegenerator.GeneralNames,
+			expectedPrefix:      "",
+			expectedSuffix:      "",
+			separator:           " ",
 		},
 	}
 
@@ -146,7 +179,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			name := tc.generator.Generate()
 
-			test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.expectedFirstNames, tc.expectedSecondNames)
+			test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
 
 			names := tc.generator.GenerateMultiple(5)
 
@@ -155,13 +188,13 @@ func TestNameGenerator_Generate(t *testing.T) {
 			}
 
 			for _, name := range names {
-				test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.expectedFirstNames, tc.expectedSecondNames)
+				test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
 			}
 		})
 	}
 }
 
-func test(t *testing.T, name, prefix, suffix string, firstNames, secondNames []string) {
+func test(t *testing.T, name, prefix, suffix, separator string, firstNames, secondNames []string) {
 	if name == "" {
 		t.Errorf("Expected a name, got an empty string")
 	}
@@ -176,16 +209,16 @@ func test(t *testing.T, name, prefix, suffix string, firstNames, secondNames []s
 	}
 	name = strings.TrimSuffix(name, suffix)
 
-	if !strings.Contains(name, "-") {
+	if !strings.Contains(name, separator) {
 		t.Errorf("Expected a name does not contain a family name separator, got %s", name)
 	}
 
-	if strings.Count(name, "-") == 1 {
-		if !contains(firstNames, strings.Split(name, "-")[0]) {
+	if strings.Count(name, separator) == 1 {
+		if !contains(firstNames, strings.Split(name, separator)[0]) {
 			t.Errorf("Generated name '%s' is not contained in the list of first names", name)
 		}
 
-		if !contains(secondNames, strings.Split(name, "-")[1]) {
+		if !contains(secondNames, strings.Split(name, separator)[1]) {
 			t.Errorf("Generated name '%s' is not contained in the list of second names", name)
 		}
 	}

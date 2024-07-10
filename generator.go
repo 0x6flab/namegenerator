@@ -95,6 +95,16 @@ type NameGenerator interface {
 	// Output:
 	//  `John-Smith-abcde`
 	WithRandomString(lenOfRandomString int) NameGenerator
+
+	// WithSeparator adds the separator in between the names.
+	//
+	// Example:
+	//  generator := namegenerator.NewGenerator().WithSeparator("*")
+	//  name := generator.Generate()
+	//  fmt.Println(name)
+	// Output:
+	//  `John*Smith`
+	WithSeparator(separator string) NameGenerator
 }
 
 // nameGenerator is a struct that implements NameGenerator.
@@ -103,6 +113,7 @@ type nameGenerator struct {
 	prefix            string
 	suffix            string
 	lenOfRandomString int
+	separator         string
 }
 
 // NewGenerator returns a new NameGenerator.
@@ -134,12 +145,17 @@ type nameGenerator struct {
 // Example to generate names with a random string:
 //
 //	generator := namegenerator.NewGenerator().WithRandomString(5)
+//
+// Example to generate names with a separator:
+//
+//	generator := namegenerator.NewGenerator().WithSeparator("*")
 func NewGenerator() NameGenerator {
 	return &nameGenerator{
 		gender:            NonBinary,
 		prefix:            "",
 		suffix:            "",
 		lenOfRandomString: 0,
+		separator:         "-",
 	}
 }
 
@@ -167,6 +183,12 @@ func (namegen *nameGenerator) WithRandomString(lenOfRandomString int) NameGenera
 	return namegen
 }
 
+func (namegen *nameGenerator) WithSeparator(separator string) NameGenerator {
+	namegen.separator = separator
+
+	return namegen
+}
+
 func (namegen *nameGenerator) Generate(options ...Options) string {
 	for _, option := range options {
 		option(namegen)
@@ -174,7 +196,7 @@ func (namegen *nameGenerator) Generate(options ...Options) string {
 
 	randomName := ""
 	if namegen.lenOfRandomString > 0 {
-		randomName = "-" + namegen.generateRandomString(namegen.lenOfRandomString)
+		randomName = namegen.separator + namegen.generateRandomString(namegen.lenOfRandomString)
 	}
 
 	switch namegen.gender {
@@ -182,12 +204,12 @@ func (namegen *nameGenerator) Generate(options ...Options) string {
 		grandom := namegen.generateRandomNumber(len(MaleNames))
 		frandom := namegen.generateRandomNumber(len(FamilyNames))
 
-		return namegen.prefix + MaleNames[grandom] + "-" + FamilyNames[frandom] + randomName + namegen.suffix
+		return namegen.prefix + MaleNames[grandom] + namegen.separator + FamilyNames[frandom] + randomName + namegen.suffix
 	case Female:
 		grandom := namegen.generateRandomNumber(len(FemaleNames))
 		frandom := namegen.generateRandomNumber(len(FamilyNames))
 
-		return namegen.prefix + FemaleNames[grandom] + "-" + FamilyNames[frandom] + randomName + namegen.suffix
+		return namegen.prefix + FemaleNames[grandom] + namegen.separator + FamilyNames[frandom] + randomName + namegen.suffix
 	case NonBinary:
 		fallthrough
 	// This condition never happens, but it's here to make the compiler happy.
@@ -195,7 +217,7 @@ func (namegen *nameGenerator) Generate(options ...Options) string {
 		g1random := namegen.generateRandomNumber(len(GeneralNames))
 		g2random := namegen.generateRandomNumber(len(GeneralNames))
 
-		return namegen.prefix + GeneralNames[g1random] + "-" + GeneralNames[g2random] + randomName + namegen.suffix
+		return namegen.prefix + GeneralNames[g1random] + namegen.separator + GeneralNames[g2random] + randomName + namegen.suffix
 	}
 }
 
