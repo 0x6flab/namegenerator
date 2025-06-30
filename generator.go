@@ -236,10 +236,10 @@ func (namegen *nameGenerator) GenerateMultiple(count int, options ...Options) []
 
 // generateRandomNumber generates a random number.
 // If the random number generator fails, it will use the math/rand package.
-func (namegen *nameGenerator) generateRandomNumber(max int) uint64 {
-	random, err := rand.Int(rand.Reader, big.NewInt(int64(max)))
+func (namegen *nameGenerator) generateRandomNumber(maximum int) uint64 {
+	random, err := rand.Int(rand.Reader, big.NewInt(int64(maximum)))
 	if err != nil {
-		random = big.NewInt(mrand.Int63n(int64(max)))
+		random = big.NewInt(mrand.Int63n(int64(maximum)))
 	}
 
 	return random.Uint64()
@@ -248,6 +248,7 @@ func (namegen *nameGenerator) generateRandomNumber(max int) uint64 {
 // generateRandomString generates a random string.
 func (namegen *nameGenerator) generateRandomString(length int) string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 	b := make([]byte, length)
 	for i := range b {
 		random := namegen.generateRandomNumber(len(charset))
