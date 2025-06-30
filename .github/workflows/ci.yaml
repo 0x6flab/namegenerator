@@ -48,7 +48,7 @@ jobs:
       - name: Check linting
         uses: golangci/golangci-lint-action@v8
         with:
-          skip-cache: true
+          version: latest
 
       - name: Run tests
         run: |
