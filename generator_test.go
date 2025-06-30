@@ -179,7 +179,7 @@ func TestNameGenerator_Generate(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			name := tc.generator.Generate()
 
-			test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
+			validate(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
 
 			names := tc.generator.GenerateMultiple(5)
 
@@ -188,13 +188,13 @@ func TestNameGenerator_Generate(t *testing.T) {
 			}
 
 			for _, name := range names {
-				test(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
+				validate(t, name, tc.expectedPrefix, tc.expectedSuffix, tc.separator, tc.expectedFirstNames, tc.expectedSecondNames)
 			}
 		})
 	}
 }
 
-func test(t *testing.T, name, prefix, suffix, separator string, firstNames, secondNames []string) {
+func validate(t *testing.T, name, prefix, suffix, separator string, firstNames, secondNames []string) {
 	if name == "" {
 		t.Errorf("Expected a name, got an empty string")
 	}

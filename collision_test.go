@@ -44,10 +44,10 @@ func TestCollision(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			generator := namegenerator.NewGenerator()
 
-			metrics(t, generator, tc.options, tc.description, 1000)
-			metrics(t, generator, tc.options, tc.description, 10000)
-			metrics(t, generator, tc.options, tc.description, 100000)
-			// metrics(t, generator, tc.options, tc.description, 1000000)
+			logMetrics(t, generator, tc.options, tc.description, 1000)
+			logMetrics(t, generator, tc.options, tc.description, 10000)
+			logMetrics(t, generator, tc.options, tc.description, 100000)
+			// logMetrics(t, generator, tc.options, tc.description, 1000000)
 		})
 	}
 }
@@ -65,9 +65,12 @@ func getNonUnique(names []string) int {
 	return len(names) - unique
 }
 
-func metrics(t *testing.T, generator namegenerator.NameGenerator, options []namegenerator.Options, desc string, num int) {
-	max := 0
-	min := num
+func logMetrics(
+	t *testing.T, generator namegenerator.NameGenerator,
+	options []namegenerator.Options, desc string, num int,
+) {
+	maximum := 0
+	minimum := num
 	average := 0
 	iter := 30
 	if num == 1000000 {
@@ -76,15 +79,15 @@ func metrics(t *testing.T, generator namegenerator.NameGenerator, options []name
 	for i := 0; i < iter; i++ {
 		names := generator.GenerateMultiple(num, options...)
 		nonUnique := getNonUnique(names)
-		if nonUnique > max {
-			max = nonUnique
+		if nonUnique > maximum {
+			maximum = nonUnique
 		}
-		if nonUnique < min {
-			min = nonUnique
+		if nonUnique < minimum {
+			minimum = nonUnique
 		}
 		average += nonUnique
 	}
 	average /= iter
 
-	t.Logf("%d %s: Max %d, Min %d, Average %d", num, desc, max, min, average)
+	t.Logf("%d %s: Max %d, Min %d, Average %d", num, desc, maximum, minimum, average)
 }
