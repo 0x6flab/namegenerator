@@ -54,6 +54,7 @@ func TestCollision(t *testing.T) {
 
 func getNonUnique(names []string) int {
 	unique := 0
+
 	uniqueNames := make(map[string]bool)
 	for _, name := range names {
 		if _, ok := uniqueNames[name]; !ok {
@@ -73,20 +74,26 @@ func logMetrics(
 	minimum := num
 	average := 0
 	iter := 30
+
 	if num == 1000000 {
 		iter = 11
 	}
+
 	for i := 0; i < iter; i++ {
 		names := generator.GenerateMultiple(num, options...)
 		nonUnique := getNonUnique(names)
+
 		if nonUnique > maximum {
 			maximum = nonUnique
 		}
+
 		if nonUnique < minimum {
 			minimum = nonUnique
 		}
+
 		average += nonUnique
 	}
+
 	average /= iter
 
 	t.Logf("%d %s: Max %d, Min %d, Average %d", num, desc, maximum, minimum, average)

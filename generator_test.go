@@ -202,11 +202,13 @@ func validate(t *testing.T, name, prefix, suffix, separator string, firstNames, 
 	if prefix != "" && !strings.HasPrefix(name, prefix) {
 		t.Errorf("Expected a name with a prefix, got %s", name)
 	}
+
 	name = strings.TrimPrefix(name, prefix)
 
 	if suffix != "" && !strings.HasSuffix(name, suffix) {
 		t.Errorf("Expected a name with a suffix, got %s", name)
 	}
+
 	name = strings.TrimSuffix(name, suffix)
 
 	if !strings.Contains(name, separator) {

@@ -248,6 +248,7 @@ func (namegen *nameGenerator) generateRandomNumber(maximum int) uint64 {
 // generateRandomString generates a random string.
 func (namegen *nameGenerator) generateRandomString(length int) string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 	b := make([]byte, length)
 	for i := range b {
 		random := namegen.generateRandomNumber(len(charset))
