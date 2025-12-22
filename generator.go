@@ -190,34 +190,42 @@ func (namegen *nameGenerator) WithSeparator(separator string) NameGenerator {
 }
 
 func (namegen *nameGenerator) Generate(options ...Options) string {
+	gen := &nameGenerator{
+		gender:            namegen.gender,
+		prefix:            namegen.prefix,
+		suffix:            namegen.suffix,
+		lenOfRandomString: namegen.lenOfRandomString,
+		separator:         namegen.separator,
+	}
+
 	for _, option := range options {
-		option(namegen)
+		option(gen)
 	}
 
 	randomName := ""
-	if namegen.lenOfRandomString > 0 {
-		randomName = namegen.separator + namegen.generateRandomString(namegen.lenOfRandomString)
+	if gen.lenOfRandomString > 0 {
+		randomName = gen.separator + gen.generateRandomString(gen.lenOfRandomString)
 	}
 
-	switch namegen.gender {
+	switch gen.gender {
 	case Male:
-		grandom := namegen.generateRandomNumber(len(MaleNames))
-		frandom := namegen.generateRandomNumber(len(FamilyNames))
+		grandom := gen.generateRandomNumber(len(MaleNames))
+		frandom := gen.generateRandomNumber(len(FamilyNames))
 
-		return namegen.prefix + MaleNames[grandom] + namegen.separator + FamilyNames[frandom] + randomName + namegen.suffix
+		return gen.prefix + MaleNames[grandom] + gen.separator + FamilyNames[frandom] + randomName + gen.suffix
 	case Female:
-		grandom := namegen.generateRandomNumber(len(FemaleNames))
-		frandom := namegen.generateRandomNumber(len(FamilyNames))
+		grandom := gen.generateRandomNumber(len(FemaleNames))
+		frandom := gen.generateRandomNumber(len(FamilyNames))
 
-		return namegen.prefix + FemaleNames[grandom] + namegen.separator + FamilyNames[frandom] + randomName + namegen.suffix
+		return gen.prefix + FemaleNames[grandom] + gen.separator + FamilyNames[frandom] + randomName + gen.suffix
 	case NonBinary:
 		fallthrough
 	// This condition never happens, but it's here to make the compiler happy.
 	default:
-		g1random := namegen.generateRandomNumber(len(GeneralNames))
-		g2random := namegen.generateRandomNumber(len(GeneralNames))
+		g1random := gen.generateRandomNumber(len(GeneralNames))
+		g2random := gen.generateRandomNumber(len(GeneralNames))
 
-		return namegen.prefix + GeneralNames[g1random] + namegen.separator + GeneralNames[g2random] + randomName + namegen.suffix
+		return gen.prefix + GeneralNames[g1random] + gen.separator + GeneralNames[g2random] + randomName + gen.suffix
 	}
 }
 
